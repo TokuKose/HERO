@@ -11,7 +11,7 @@
 
 struct PlayerData
 {
-	int handle1;
+	int handle;
 	bool active;								// ¶‘¶ƒtƒ‰ƒO
 	bool isTurn;								// ¶‚ğŒü‚¢‚Ä‚¢‚é‚©
 	bool isAir;									// ‹ó’†‚É‚¢‚é‚©

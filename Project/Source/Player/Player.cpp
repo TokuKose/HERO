@@ -4,8 +4,8 @@
 #include "../Input/Input.h"
 
 
-#define PLAYER_DEFAULT_POS_X (500.0f)
-#define PLAYER_DEFAULT_POS_Y (600.0f)
+#define PLAYER_DEFAULT_POS_X (300.0f)
+#define PLAYER_DEFAULT_POS_Y (200.0f)
 #define PLAYER_MOVE_SPEED (4.0f)
 
 // ジャンプ力
@@ -19,8 +19,8 @@
 #define PLAYER_BOX_COLLISION_OFFSET_X (24)
 #define PLAYER_BOX_COLLISION_OFFSET_Y (20)
 // 矩形判定のサイズ
-#define PLAYER_BOX_COLLISION_WIDTH (20)
-#define PLAYER_BOX_COLLISION_HEIGHT (44)
+#define PLAYER_BOX_COLLISION_WIDTH (25)
+#define PLAYER_BOX_COLLISION_HEIGHT (50)
 
 PlayerData g_PlayerData = { 0 };
 PlayerData g_PrevPlayerData = { 0 };
@@ -34,7 +34,7 @@ void InitPlayer()
 	g_PlayerData.moveY = 0.0f;
 	g_PlayerData.active = false;
 
-	g_PlayerData.handle1 = LoadGraph("Data/Player/Player1.png");
+	
 
 	g_PlayerData.posX = PLAYER_DEFAULT_POS_X;
 	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y;
@@ -53,11 +53,8 @@ void InitPlayer()
 
 void LoadPlayer()
 {
-	/*g_PlayerData.animation[PLAYER_ANIM_IDLE].handle = LoadGraph("Data/Player/PlayerIdle.png");
-	g_PlayerData.animation[PLAYER_ANIM_RUN].handle = LoadGraph("Data/Player/PlayerRun.png");
-	g_PlayerData.animation[PLAYER_ANIM_JUMP].handle = LoadGraph("Data/Player/PlayerJump.png");
-	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/PlayerFall.png");
-	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/PlayerLanding.png");*/
+	
+	g_PlayerData.handle = LoadGraph("Data/Player/Player1.png");
 	
 }
 
@@ -197,6 +194,8 @@ void DrawPlayer()
 
 	//カメラ取得
 	CameraData camera = GetCamera();
+
+	DrawGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, g_PlayerData.handle, TRUE);
 	//// アニメーション描画でプレイヤーを描画する
 	//PlayerAnimationType animType = g_PlayerData.playAnim;
 	//AnimationData* animData = &g_PlayerData.animation[animType];
