@@ -22,6 +22,5 @@ bool CheckCirclePoint(float circlePosX, float circlePosY, float circleRadius, fl
 // ‰~‚Æ‰~‚Ì“–‚½‚è”»’è
 bool CheckCircleCircle(float circleA_PosX, float circleA_PosY, float circleA_Radius, float circleB_PosX, float circleB_PosY, float circleB_Radius);
 
-// Še“–‚½‚è”»’è‚ğs‚¤
-void CheckCollision();
+
 

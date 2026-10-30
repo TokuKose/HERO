@@ -118,11 +118,5 @@ bool CheckCircleCircle(float circleA_PosX, float circleA_PosY, float circleA_Rad
 	return false;
 }
 
-void CheckCollision()
-{
-	// ここに当たり判定の処理を書く
 
-	// プレイヤーとマップの当たり判定
-	ChceckMapPlayerCollision();
-}
 

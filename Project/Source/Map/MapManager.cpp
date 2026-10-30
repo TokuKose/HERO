@@ -34,10 +34,10 @@ void FinMap()
 
 void ChceckMapPlayerCollision()
 {
-	PlayerData player = GetPlayer();
+	PlayerData* player = GetPlayer();
 	// プレイヤーの足元の座標をマップチップのインデックスに変換
-	int playerX = (int)(player.posX / MAP_CHIP_WIDTH);
-	int playerY = (int)((player.posY + PLAYER_HEIGHT) / MAP_CHIP_HEIGHT);
+	int playerX = (int)(player->posX / MAP_CHIP_WIDTH);
+	int playerY = (int)((player->posY + PLAYER_HEIGHT) / MAP_CHIP_HEIGHT);
 	// プレイヤーの左上にあるマップチップインデックス
 	int left = playerX - CHECK_ROUND_NUM;
 	int top = playerY - CHECK_ROUND_NUM;
@@ -54,6 +54,12 @@ void ChceckMapPlayerCollision()
 		{
 			// マップチップからはみ出したら処理しなくていい
 			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
+
+
+			if (x == 13 && y == 12)
+			{
+				x = 13;
+			}
 
 			// マップチップ番号を取得
 			MapChipData mapChipData = GetMapChipData(x, y);

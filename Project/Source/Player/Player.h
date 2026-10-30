@@ -1,9 +1,9 @@
 #pragma once
 #include "../Map/MapParameter.h"
-
+#include "../Collision/Collision.h"
 
 // プレイヤーサイズ
-#define PLAYER_WIDTH	(25.0f)
+#define PLAYER_WIDTH	(30.0f)
 #define PLAYER_HEIGHT	(50.0f)
 #define PLAYER_RADIUS	(36.0f)
 
@@ -35,7 +35,7 @@ void DrawPlayer();
 void FinPlayer();
 
 // 取得関数
-PlayerData GetPlayer();
+PlayerData* GetPlayer();
 
 // 当たり判定
 void PlayerHitNormalBlock(MapChipData mapChipData);

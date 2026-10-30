@@ -3,7 +3,7 @@
 #include "../Camera/Camera.h"
 #include "../Input/Input.h"
 #include "../Collision/Collision.h"
-
+#include "../Map/MapManager.h"
 
 #define PLAYER_DEFAULT_POS_X (300.0f)
 #define PLAYER_DEFAULT_POS_Y (200.0f)
@@ -29,20 +29,23 @@ PlayerData g_PrevPlayerData = { 0 };
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
 
 
+
 void InitPlayer()
 {
 	g_PlayerData.posX = PLAYER_DEFAULT_POS_X;
 	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y;
-	g_PlayerData.moveX = 0.0f;
-	g_PlayerData.moveY = 0.0f;
 	g_PlayerData.active = false;
+	g_PlayerData.boxCollision.width = 25;
+	g_PlayerData.boxCollision.height = 50;
+	//g_PlayerData.moveX = PLAYER_MOVE_SPEED;
+	//g_PlayerData.moveY = PLAYER_MOVE_SPEED;
 
-	
 
-	g_PlayerData.posX = PLAYER_DEFAULT_POS_X;
-	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y;
-	g_PlayerData.moveX = PLAYER_MOVE_SPEED;
-	g_PlayerData.moveY = PLAYER_MOVE_SPEED;
+	// testデータ
+	g_PlayerData.posX = PLAYER_DEFAULT_POS_X-30;
+	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y-30;
+	g_PlayerData.moveX = 0;
+	g_PlayerData.moveY = 1;
 	//g_PlayerData.playAnim = PLAYER_ANIM_NONE;
 
 	//for (int i = 0; i < PLAYER_ANIM_MAX; i++)
@@ -88,7 +91,7 @@ void StepPlayer()
 	g_PrevPlayerData = g_PlayerData;
 
 	// X移動量は毎回リセットする
-	g_PlayerData.moveX = 0.0f;
+	//g_PlayerData.moveX = 0.0f;
 
 	// Y移動量に重力を反映
 	g_PlayerData.moveY += PLAYER_GRAVITY;
@@ -109,10 +112,12 @@ void UpdatePlayer()
 
 	// 移動処理
 	
+	g_PlayerData.posX += g_PlayerData.moveX;
 	g_PlayerData.posY += g_PlayerData.moveY;
 
 	//UpdatePlayerAnimation();
-
+	g_PlayerData.moveX = 0;
+	
 
 	g_PlayerData.beforposX = g_PlayerData.posX;
 
@@ -120,22 +125,22 @@ void UpdatePlayer()
 	// 上入力
 	if (IsInputKey(KEY_UP))
 	{
-		g_PlayerData.posY -= g_PlayerData.moveY;
+		 g_PlayerData.moveY=-5;
 	}
 	// 下入力
 	if (IsInputKey(KEY_DOWN))
 	{
-		g_PlayerData.posY += g_PlayerData.moveY;
+		g_PlayerData.moveY=5;
 	}
 	// 左入力
 	if (IsInputKey(KEY_LEFT))
 	{
-		g_PlayerData.posX -= g_PlayerData.moveX;
+		g_PlayerData.moveX=-3;
 	}
 	// 右入力
 	if (IsInputKey(KEY_RIGHT))
 	{
-		g_PlayerData.posX += g_PlayerData.moveX;
+		g_PlayerData.moveX=3;
 	}
 	//if (IsTriggerKey(KEY_Z))
 	//{
@@ -169,6 +174,10 @@ void UpdatePlayer()
 		g_PlayerData.posY = 930;
 
 	}
+	
+		// プレイヤーとマップの当たり判定
+		ChceckMapPlayerCollision();
+	
 	// ヒットフラグは毎回折る（当たり判定後に当たっていたら立てる）
 	g_PlayerData.hitFlag = false;
 }
@@ -201,9 +210,9 @@ void FinPlayer()
 	}*/
 }
 
-PlayerData GetPlayer()
+PlayerData* GetPlayer()
 {
-	return PlayerData();
+	return &g_PlayerData;
 }
 
 void PlayerHitNormalBlock(MapChipData mapChipData)
@@ -268,7 +277,41 @@ void PlayerHitNormalBlock(MapChipData mapChipData)
 			// 下に押し出す
 			g_PlayerData.posY += (block->pos.y + MAP_CHIP_WIDTH) - y;
 		}
+
+
+
 	}
+
+	/*
+	// 最新の座標で縦に当たっているかチェック
+	player.posX = g_PlayerData.posX;
+	player.posY = g_PlayerData.posY;
+
+	// 当たり判定のボックス計算
+	CalcBoxCollision(player, x, y, w, h);
+
+	// まだ当たっているなら縦に当たっている
+	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
+		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+	{
+		// Y移動量を0にする
+		g_PlayerData.moveY = 0.0f;
+
+		// 上からあたったか
+		if (player.moveY > 0.0f)
+		{
+			// 上に押し出す
+			g_PlayerData.posY -= (y + h) - block->pos.y;
+			g_PlayerData.isAir = false;
+		}
+		// 下からあたったか
+		else if (player.moveY < 0.0f)
+		{
+			// 下に押し出す
+			g_PlayerData.posY += (block->pos.y + MAP_CHIP_WIDTH) - y;
+		}
+	}
+	*/
 }
 
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h)
