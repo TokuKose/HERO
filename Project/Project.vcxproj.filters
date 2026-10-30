@@ -25,6 +25,18 @@
     <Filter Include="Source\Collision">
       <UniqueIdentifier>{93610ff7-1377-4b2e-8edd-98792af9c3c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{8f9b1cad-6c8f-49c5-b12b-687c5af1d292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\Play">
+      <UniqueIdentifier>{6cf10d5c-410e-4944-a78e-2835ae660bf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\GameOver">
+      <UniqueIdentifier>{6a34a534-286e-4559-abcf-5270120924b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\GameClear">
+      <UniqueIdentifier>{30d28653-7875-425c-835d-92fe6484124c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -53,6 +65,18 @@
     </ClCompile>
     <ClCompile Include="Source\Collision\Collision.cpp">
       <Filter>Source\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Play\PlayScene.cpp">
+      <Filter>Source\Scene\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneManager.cpp">
+      <Filter>Source\Scene\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\GameOver\GameOverScene.cpp">
+      <Filter>Source\Scene\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\GameClear\GameClearScene.cpp">
+      <Filter>Source\Scene\GameClear</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -85,6 +109,18 @@
     </ClInclude>
     <ClInclude Include="Source\Collision\Collision.h">
       <Filter>Source\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Play\PlayScene.h">
+      <Filter>Source\Scene\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\SceneManager.h">
+      <Filter>Source\Scene\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\GameOver\GameOverScene.h">
+      <Filter>Source\Scene\GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\GameClear\GameClearScene.h">
+      <Filter>Source\Scene\GameClear</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

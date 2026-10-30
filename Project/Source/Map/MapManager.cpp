@@ -55,12 +55,6 @@ void ChceckMapPlayerCollision()
 			// マップチップからはみ出したら処理しなくていい
 			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
 
-
-			if (x == 13 && y == 12)
-			{
-				x = 13;
-			}
-
 			// マップチップ番号を取得
 			MapChipData mapChipData = GetMapChipData(x, y);
 			switch (mapChipData.mapChip)

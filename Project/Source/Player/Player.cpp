@@ -28,6 +28,21 @@ PlayerData g_PrevPlayerData = { 0 };
 
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
 
+struct PlayerAnimationParam
+{
+	int interval;
+	int frameNum;
+	int width;
+	int height;
+};
+const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
+{
+	8, 4, 100, 120,
+	5, 8, 100, 120,
+	8, 2, 100, 120,
+	8, 2, 100, 120,
+	8, 1, 100, 120,
+};
 
 
 void InitPlayer()
@@ -101,6 +116,27 @@ void StepPlayer()
 
 void UpdatePlayer()
 {
+	// 上入力
+	if (IsTriggerKey(KEY_UP))
+	{
+		g_PlayerData.moveY = -5;
+	}
+	// 下入力
+	/*if (IsTriggerKey(KEY_DOWN))
+	{
+		g_PlayerData.moveY = 5;
+	}*/
+	// 左入力
+	if (IsInputKey(KEY_LEFT))
+	{
+		g_PlayerData.moveX = -3;
+	}
+	// 右入力
+	if (IsInputKey(KEY_RIGHT))
+	{
+		g_PlayerData.moveX = 3;
+	}
+
 	// 死んでいたら処理しない
 	if (!g_PlayerData.active) return;
 
@@ -110,38 +146,22 @@ void UpdatePlayer()
 		g_PlayerData.isAir = true;
 	}
 
+
+	g_PlayerData.moveY += PLAYER_GRAVITY;
+
 	// 移動処理
 	
 	g_PlayerData.posX += g_PlayerData.moveX;
 	g_PlayerData.posY += g_PlayerData.moveY;
 
+	
 	//UpdatePlayerAnimation();
-	g_PlayerData.moveX = 0;
 	
 
 	g_PlayerData.beforposX = g_PlayerData.posX;
 
 	g_PlayerData.beforposY = g_PlayerData.posY;
-	// 上入力
-	if (IsInputKey(KEY_UP))
-	{
-		 g_PlayerData.moveY=-5;
-	}
-	// 下入力
-	if (IsInputKey(KEY_DOWN))
-	{
-		g_PlayerData.moveY=5;
-	}
-	// 左入力
-	if (IsInputKey(KEY_LEFT))
-	{
-		g_PlayerData.moveX=-3;
-	}
-	// 右入力
-	if (IsInputKey(KEY_RIGHT))
-	{
-		g_PlayerData.moveX=3;
-	}
+
 	//if (IsTriggerKey(KEY_Z))
 	//{
 	//	float fireX = g_PlayerData.posX + PLAYER_NORMAL_SHOT_OFFSET_X;
@@ -180,6 +200,10 @@ void UpdatePlayer()
 	
 	// ヒットフラグは毎回折る（当たり判定後に当たっていたら立てる）
 	g_PlayerData.hitFlag = false;
+
+
+	g_PlayerData.moveX = 0;
+	
 }
 
 void DrawPlayer()
@@ -225,39 +249,15 @@ void PlayerHitNormalBlock(MapChipData mapChipData)
 	// ターンフラグは前回のものにしないと反転した分ずれる
 	player.isTurn = g_PrevPlayerData.isTurn;
 
-	// Y移動を戻し、横に当たっているかチェック
-	player.posX = g_PlayerData.posX;
-	player.posY = g_PrevPlayerData.posY;
+	//// Y移動を戻し、横に当たっているかチェック
+	//player.posX = g_PlayerData.posX;
+	//player.posY = g_PrevPlayerData.posY;
 
+	// まだ当たっているなら縦に当たっている
 	// 当たり判定のボックス計算
 	float x, y, w, h;
 	CalcBoxCollision(player, x, y, w, h);
 
-	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
-		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
-	{
-		// 左からあたったか
-		if (player.moveX > 0.0f)
-		{
-			// 左に押し出す
-			g_PlayerData.posX -= (x + w) - block->pos.x;
-		}
-		// 右からあたったか
-		else if (player.moveX < 0.0f)
-		{
-			// 右に押し出す
-			g_PlayerData.posX += (block->pos.x + MAP_CHIP_WIDTH) - x;
-		}
-	}
-
-	// 最新の座標で縦に当たっているかチェック
-	player.posX = g_PlayerData.posX;
-	player.posY = g_PlayerData.posY;
-
-	// 当たり判定のボックス計算
-	CalcBoxCollision(player, x, y, w, h);
-
-	// まだ当たっているなら縦に当たっている
 	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
 		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
 	{
@@ -270,17 +270,43 @@ void PlayerHitNormalBlock(MapChipData mapChipData)
 			// 上に押し出す
 			g_PlayerData.posY -= (y + h) - block->pos.y;
 			g_PlayerData.isAir = false;
+			g_PlayerData.moveY = 0.0f;
 		}
 		// 下からあたったか
 		else if (player.moveY < 0.0f)
 		{
 			// 下に押し出す
 			g_PlayerData.posY += (block->pos.y + MAP_CHIP_WIDTH) - y;
+			g_PlayerData.moveY = 0.0f;
 		}
-
-
-
 	}
+
+	// 最新の座標で縦に当たっているかチェック
+	player.posX = g_PlayerData.posX;
+	player.posY = g_PlayerData.posY;
+
+	// 当たり判定のボックス計算
+	CalcBoxCollision(player, x, y, w, h);
+
+	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
+		block->pos.x, block->pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+	{
+		// 左からあたったか
+		if (player.moveX > 0.0f)
+		{
+			// 左に押し出す
+			g_PlayerData.posX -= (x + w) - block->pos.x;
+			g_PlayerData.moveX = 0.0f;
+		}
+		// 右からあたったか
+		else if (player.moveX < 0.0f)
+		{
+			// 右に押し出す
+			g_PlayerData.posX += (block->pos.x + MAP_CHIP_WIDTH) - x;
+			g_PlayerData.moveX = 0.0f;
+		}
+	}
+	
 
 	/*
 	// 最新の座標で縦に当たっているかチェック
