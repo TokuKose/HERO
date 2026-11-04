@@ -8,6 +8,8 @@
 
 #include "Player/Player.h"
 
+#include "Enemy/Enemy.h"
+
 //ÉvÉçÉOÉâÉÄÇÃèâÇﬂÇÕWinMainÇ©ÇÁénÇ‹ÇËÇ‹Ç∑
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
@@ -33,14 +35,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
     InitInput();
 
     InitPlayer();
+    
+    InitEnemy();
 
     LoadPlayer();
+
+    LoadEnemy();
 
     LoadMap();
 
     StartMap();
 
     StartPlayer();
+
+    StartEnemy();
 
     SetDrawScreen(DX_SCREEN_BACK);
 
@@ -53,6 +61,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
         UpdateInput();
 
         UpdatePlayer();
+
+        UpdateEnemy();
 
         DrawBox(0, 0, 1280, 720,
 
@@ -69,6 +79,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
         DrawMap();
 
         DrawPlayer();
+
+        DrawEnemy();
 
         ScreenFlip();
 

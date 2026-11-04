@@ -28,21 +28,21 @@ PlayerData g_PrevPlayerData = { 0 };
 
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
 
-struct PlayerAnimationParam
-{
-	int interval;
-	int frameNum;
-	int width;
-	int height;
-};
-const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
-{
-	8, 4, 100, 120,
-	5, 8, 100, 120,
-	8, 2, 100, 120,
-	8, 2, 100, 120,
-	8, 1, 100, 120,
-};
+//struct PlayerAnimationParam
+//{
+//	int interval;
+//	int frameNum;
+//	int width;
+//	int height;
+//};
+//const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
+//{
+//	8, 4, 100, 120,
+//	5, 8, 100, 120,
+//	8, 2, 100, 120,
+//	8, 2, 100, 120,
+//	8, 1, 100, 120,
+//};
 
 
 void InitPlayer()

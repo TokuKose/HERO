@@ -1,5 +1,6 @@
 #include "Block.h"
 #include "../Camera/Camera.h"
+#include "../Collision/Collision.h"
 
 BlockData g_Blocks[BLOCK_MAX] = { 0 };
 int g_BlockHandle[BLOCK_TYPE_MAX] = { 0 };
@@ -11,7 +12,7 @@ void InitBlock()
 	{
 		block->active = false;
 		block->pos = VGet(0.0f, 0.0f, 0.0f);
-		block->type = MAP_CHIP_NONE;
+		block->type = MAP_TYPE_NONE;
 	}
 }
 

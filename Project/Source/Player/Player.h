@@ -22,6 +22,7 @@ struct PlayerData
 	float beforposX;
 	float beforposY;
 	int hitFlag;
+	Body body;
 	BoxCollision boxCollision;					// ‹éŒ`“–‚½‚è”»’è
 };
 
@@ -38,4 +39,5 @@ void FinPlayer();
 PlayerData* GetPlayer();
 
 // “–‚½‚è”»’è
-void PlayerHitNormalBlock(MapChipData mapChipData);
+void PlayerHitNormalBlockX(MapChipData mapChipData);
+void PlayerHitNormalBlockY(MapChipData mapChipData);

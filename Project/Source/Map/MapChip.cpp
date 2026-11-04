@@ -3,6 +3,7 @@
 #include "../GameSetting/GameSetting.h"
 #include "MapParameter.h"
 #include "Block.h"
+#include "MapManager.h"
 
 MapChipData g_MapChip[MAP_CHIP_Y_NUM][MAP_CHIP_X_NUM] = { 0 };
 
@@ -34,7 +35,7 @@ void CreateMap()
 			MapChipType type = (MapChipType)g_MapChip[i][j].mapChip;
 
 			// MAP_CHIP_NONEの場合は何もしない
-			if (type == MAP_CHIP_NONE) continue;
+			if (type == MAP_TYPE_NONE) continue;
 
 			// インデックスから座標を計算
 			VECTOR pos = VGet(j * MAP_CHIP_WIDTH, i * MAP_CHIP_HEIGHT, 0.0f);

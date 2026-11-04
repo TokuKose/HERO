@@ -1,9 +1,17 @@
 #pragma once
-
+#include "DxLib.h"
 struct BoxCollision
 {
 	float posX;
 	float posY;
+	float width;
+	float height;
+};
+struct Body
+{
+	bool isAir;
+	VECTOR pos;
+	VECTOR move;
 	float width;
 	float height;
 };

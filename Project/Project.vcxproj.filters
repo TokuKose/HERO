@@ -37,6 +37,9 @@
     <Filter Include="Source\Scene\GameClear">
       <UniqueIdentifier>{30d28653-7875-425c-835d-92fe6484124c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Enemy">
+      <UniqueIdentifier>{103303e3-9977-441c-ab0f-b3fe6c9b6f13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\GameClear\GameClearScene.cpp">
       <Filter>Source\Scene\GameClear</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\Enemy.cpp">
+      <Filter>Source\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy\EnemyManager.cpp">
+      <Filter>Source\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +130,12 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\GameClear\GameClearScene.h">
       <Filter>Source\Scene\GameClear</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\Enemy.h">
+      <Filter>Source\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy\EnemyManager.h">
+      <Filter>Source\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
