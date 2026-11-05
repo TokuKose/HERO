@@ -3,6 +3,7 @@
 #include "MapChip.h"
 #include "Block.h"
 #include "../Player/Player.h"
+#include"../Enemy/Enemy.h"
 #include "../Collision/Collision.h"
 
 // キャラクターの周囲何マスまでチェックするか
@@ -184,6 +185,76 @@ void ChceckMapPlayerCollision()
 			{
 			case NORMAL_BLOCK:
 				PlayerHitNormalBlockX(mapChipData);
+				break;
+			}
+		}
+	}
+}
+
+void ChceckMapEnemyCollision()
+{
+	EnemyData* enemy = GetEnemy();
+
+	int enemyX, enemyY;
+	int left, right, top, bottom;
+
+	// プレイヤーの足元の座標をマップチップのインデックスに変換、xは移動前の場所の位置で計算
+	enemyX = (int)(enemy->beforposX / MAP_CHIP_WIDTH);
+	enemyY = (int)((enemy->posY + PLAYER_HEIGHT) / MAP_CHIP_HEIGHT);
+	//上下移動なので自身より上か下にあるブロックだけを検索する
+	left = enemyX - CHECK_ROUND_NUM;
+	right = enemyX + CHECK_ROUND_NUM;
+	top = enemyY - ((enemy->moveY < 0) ? CHECK_ROUND_NUM : 0);
+	bottom = enemyY + ((enemy->moveY > 0) ? CHECK_ROUND_NUM : 0);
+
+	// 左上から3マスずつチェックしていく
+	for (int y = top; y <= bottom; y++)
+	{
+		// マップチップからはみ出したら処理しなくていい
+		if (y < 0 || y >= MAP_CHIP_Y_NUM) continue;
+
+		for (int x = left; x <= right; x++)
+		{
+			// マップチップからはみ出したら処理しなくていい
+			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
+
+			// マップチップ番号を取得
+			MapChipData mapChipData = GetMapChipData(x, y);
+			switch (mapChipData.mapChip)
+			{
+			case NORMAL_BLOCK:
+				EnemyHitNormalBlockY(mapChipData);
+				break;
+			}
+		}
+	}
+
+	// プレイヤーの足元の座標をマップチップのインデックスに変換、xは移動前の場所の位置で計算
+	enemyX = (int)(enemy->posX / MAP_CHIP_WIDTH);
+	enemyY = (int)((enemy->posY + PLAYER_HEIGHT) / MAP_CHIP_HEIGHT);
+	//左右移動なので自身より左か右にあるブロックだけを検索する
+	left = enemyX - ((enemy->moveX < 0) ? CHECK_ROUND_NUM : 0);
+	right = enemyX + ((enemy->moveX > 0) ? CHECK_ROUND_NUM : 0);
+	top = enemyY - CHECK_ROUND_NUM;
+	bottom = enemyY + CHECK_ROUND_NUM;
+
+	// 左上から3マスずつチェックしていく
+	for (int y = top - 1; y <= bottom; y++)
+	{
+		// マップチップからはみ出したら処理しなくていい
+		if (y < 0 || y >= MAP_CHIP_Y_NUM) continue;
+
+		for (int x = left; x <= right; x++)
+		{
+			// マップチップからはみ出したら処理しなくていい
+			if (x < 0 || x >= MAP_CHIP_X_NUM) continue;
+
+			// マップチップ番号を取得
+			MapChipData mapChipData = GetMapChipData(x, y);
+			switch (mapChipData.mapChip)
+			{
+			case NORMAL_BLOCK:
+				EnemyHitNormalBlockX(mapChipData);
 				break;
 			}
 		}

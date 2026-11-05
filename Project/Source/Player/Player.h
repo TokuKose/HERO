@@ -41,3 +41,5 @@ PlayerData* GetPlayer();
 // “–‚½‚è”»’è
 void PlayerHitNormalBlockX(MapChipData mapChipData);
 void PlayerHitNormalBlockY(MapChipData mapChipData);
+
+void PlayerHitEnemy();

@@ -38,4 +38,6 @@ void FinEnemy();
 EnemyData* GetEnemy();
 
 // “–‚½‚è”»’è
-void PlayerHitNormalBlock(MapChipData mapChipData);
+void EnemyHitNormalBlockX(MapChipData mapChipData);
+
+void EnemyHitNormalBlockY(MapChipData mapChipData);
