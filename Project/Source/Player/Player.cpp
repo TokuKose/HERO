@@ -54,6 +54,7 @@ void InitPlayer()
 	g_PlayerData.boxCollision.height = 50;
 	//g_PlayerData.moveX = PLAYER_MOVE_SPEED;
 	//g_PlayerData.moveY = PLAYER_MOVE_SPEED;
+	g_PlayerData.dir = 1;
 
 
 	// testデータ
@@ -134,13 +135,15 @@ void UpdatePlayer()
 	if (IsInputKey(KEY_LEFT))
 	{
 		g_PlayerData.moveX = -3;
-		g_PlayerData.handle = LoadGraph("Data/Player/Player1B.png");
+		g_PlayerData.dir = 1;
+		
 	}
 	// 右入力
 	if (IsInputKey(KEY_RIGHT))
 	{
 		g_PlayerData.moveX = 3;
-		g_PlayerData.handle = LoadGraph("Data/Player/Player1.png");
+		g_PlayerData.dir = -1;
+		
 	}
 
 	// 死んでいたら処理しない
@@ -209,6 +212,8 @@ void UpdatePlayer()
 
 	g_PlayerData.moveX = 0;
 
+	
+
 }
 
 void DrawPlayer()
@@ -219,16 +224,18 @@ void DrawPlayer()
 	//カメラ取得
 	CameraData camera = GetCamera();
 
-	DrawGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, g_PlayerData.handle, TRUE);
-	//// アニメーション描画でプレイヤーを描画する
-	//PlayerAnimationType animType = g_PlayerData.playAnim;
-	//AnimationData* animData = &g_PlayerData.animation[animType];
-	//DrawAnimation(animData, g_PlayerData.posX - camera.pos.x, g_PlayerData.posY - camera.pos.y, g_PlayerData.isTurn);
-
-	// 当たり判定を描画
-	//float x, y, w, h;
-	//CalcBoxCollision(g_PlayerData, x, y, w, h);
-	//DrawBox((int)(x - camera.posX), (int)(y - camera.posY), (int)(x + w - camera.posX), (int)(y + h - camera.posY), GetColor(255, 255, 255), false);
+	//DrawGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, g_PlayerData.handle, TRUE);
+	int Reverse = 0;
+	if (g_PlayerData.dir == 1)
+	{
+		Reverse = 1;
+	}
+	 if (g_PlayerData.dir == -1)
+	{
+		Reverse = 0;
+	}
+	DrawRectGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+	
 }
 
 void FinPlayer()

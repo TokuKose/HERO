@@ -54,7 +54,7 @@ void InitEnemy()
 	g_EnemyData.boxCollision.height = 50;
 	//g_EnemyData.moveX = ENEMY_MOVE_SPEED;
 	//g_EnemyData.moveY = ENEMY_MOVE_SPEED;
-
+	g_EnemyData.dir = -1;
 
 	// testデータ
 	g_EnemyData.posX = ENEMY_DEFAULT_POS_X - 30;
@@ -120,29 +120,7 @@ void StepEnemy()
 
 void UpdateEnemy()
 {
-	//// 上入力
-	//if (IsTriggerKey(KEY_UP))
-	//{
-	//	g_EnemyData.moveY = -5;
-	//}
-	//// 下入力
-	///*if (IsTriggerKey(KEY_DOWN))
-	//{
-	//	g_EnemyData.moveY = 5;
-	//}*/
-	//// 左入力
-	//if (IsInputKey(KEY_LEFT))
-	//{
-	//	g_EnemyData.moveX = -3;
-	//	g_EnemyData.handle = LoadGraph("Data/Enemy/Enemy1B.png");
-	//}
-	//// 右入力
-	//if (IsInputKey(KEY_RIGHT))
-	//{
-	//	g_EnemyData.moveX = 3;
-	//	g_EnemyData.handle = LoadGraph("Data/Enemy/Enemy1.png");
-	//}
-
+	
 	// 死んでいたら処理しない
 	if (!g_EnemyData.active) return;
 
@@ -163,21 +141,6 @@ void UpdateEnemy()
 
 
 	//UpdateEnemyAnimation();
-
-
-
-
-	//if (IsTriggerKey(KEY_Z))
-	//{
-	//	float fireX = g_EnemyData.posX + ENEMY_NORMAL_SHOT_OFFSET_X;
-	//	float fireY = g_EnemyData.posY + ENEMY_NORMAL_SHOT_OFFSET_Y;
-
-	//	RequestFireBullet(BULLET_LIFE, fireX, fireY, BULLET_SPEED, 0.0f, BULLET_RADIUS);
-
-	//	//PlaySE(SE_ENEMY_SHOT);
-
-	//	g_EnemyData.bulletIntervalTimer = ENEMY_NORMAL_SHOT_INTERVAL;
-	//}
 
 	if (g_EnemyData.posX >= 1750)
 	{
@@ -206,9 +169,21 @@ void UpdateEnemy()
 	// ヒットフラグは毎回折る（当たり判定後に当たっていたら立てる）
 	g_EnemyData.hitFlag = false;
 
+	if (g_EnemyData.dir == 1)
+	{
+		g_EnemyData.moveX=1;
+		
+	}
+	else if(g_EnemyData.dir == -1)
+	{
+		g_EnemyData.moveX=-1;
+		
+	}
+	//g_EnemyData.moveX = -1;
 
-	g_EnemyData.moveX = -1;
 
+
+	
 }
 
 void DrawEnemy()
@@ -219,7 +194,18 @@ void DrawEnemy()
 	//カメラ取得
 	CameraData camera = GetCamera();
 
-	DrawGraph((int)g_EnemyData.posX, (int)g_EnemyData.posY, g_EnemyData.handle, TRUE);
+	//DrawGraph((int)g_EnemyData.posX, (int)g_EnemyData.posY, g_EnemyData.handle, TRUE);
+	int Reverse=0;
+
+	if (g_EnemyData.dir == 1)
+	{
+		Reverse = 1;
+	}
+	if (g_EnemyData.dir == -1)
+	{
+		Reverse = 0;
+	}
+	DrawRectGraph((int)g_EnemyData.posX, (int)g_EnemyData.posY, 0, 0, 35, 50, g_EnemyData.handle, TRUE, Reverse, 0);
 	//// アニメーション描画でプレイヤーを描画する
 	//EnemyAnimationType animType = g_EnemyData.playAnim;
 	//AnimationData* animData = &g_EnemyData.animation[animType];
@@ -316,6 +302,7 @@ void EnemyHitNormalBlockX(MapChipData mapChipData)
 			// 左に押し出す
 			g_EnemyData.posX = tempEnemy.posX - ((x + w) - block->pos.x);
 			g_EnemyData.moveX = 0.0f;
+			g_EnemyData.dir = -1;
 		}
 		// 右からあたったか
 		else if (tempEnemy.moveX < 0.0f)
@@ -323,7 +310,10 @@ void EnemyHitNormalBlockX(MapChipData mapChipData)
 			// 右に押し出す
 			g_EnemyData.posX = tempEnemy.posX + ((block->pos.x + MAP_CHIP_WIDTH) - x);
 			g_EnemyData.moveX = 0.0f;
+			g_EnemyData.dir = 1;
+			
 		}
+
 	}
 }
 

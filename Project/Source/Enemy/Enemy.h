@@ -22,6 +22,7 @@ struct EnemyData
 	float beforposX;
 	float beforposY;
 	int hitFlag;
+	int dir;
 	BoxCollision boxCollision;					// ‹éŒ`“–‚½‚è”»’è
 };
 
