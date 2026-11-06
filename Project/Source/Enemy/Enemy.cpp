@@ -205,16 +205,8 @@ void DrawEnemy()
 	{
 		Reverse = 0;
 	}
-	DrawRectGraph((int)g_EnemyData.posX, (int)g_EnemyData.posY, 0, 0, 35, 50, g_EnemyData.handle, TRUE, Reverse, 0);
-	//// アニメーション描画でプレイヤーを描画する
-	//EnemyAnimationType animType = g_EnemyData.playAnim;
-	//AnimationData* animData = &g_EnemyData.animation[animType];
-	//DrawAnimation(animData, g_EnemyData.posX - camera.pos.x, g_EnemyData.posY - camera.pos.y, g_EnemyData.isTurn);
-
-	// 当たり判定を描画
-	//float x, y, w, h;
-	//CalcBoxCollision(g_EnemyData, x, y, w, h);
-	//DrawBox((int)(x - camera.posX), (int)(y - camera.posY), (int)(x + w - camera.posX), (int)(y + h - camera.posY), GetColor(255, 255, 255), false);
+	DrawRectGraph((int)g_EnemyData.posX - camera.pos.x, (int)g_EnemyData.posY - camera.pos.y, 0, 0, 35, 50, g_EnemyData.handle, TRUE, Reverse, 0);
+	
 }
 
 void FinEnemy()

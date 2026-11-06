@@ -40,6 +40,9 @@
     <Filter Include="Source\Enemy">
       <UniqueIdentifier>{103303e3-9977-441c-ab0f-b3fe6c9b6f13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\PlayerAttack">
+      <UniqueIdentifier>{8bde5231-b32c-4d31-bbd9-e51534ccf750}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="Source\Enemy\EnemyManager.cpp">
       <Filter>Source\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerAttack\PlayerAttack.cpp">
+      <Filter>Source\PlayerAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="Source\Enemy\EnemyManager.h">
       <Filter>Source\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerAttack\PlayerAttack.h">
+      <Filter>Source\PlayerAttack</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

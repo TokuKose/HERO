@@ -28,21 +28,6 @@ PlayerData g_PrevPlayerData = { 0 };
 
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
 
-//struct PlayerAnimationParam
-//{
-//	int interval;
-//	int frameNum;
-//	int width;
-//	int height;
-//};
-//const PlayerAnimationParam PLAYER_ANIM_PARAM[PLAYER_ANIM_MAX] =
-//{
-//	8, 4, 100, 120,
-//	5, 8, 100, 120,
-//	8, 2, 100, 120,
-//	8, 2, 100, 120,
-//	8, 1, 100, 120,
-//};
 
 
 void InitPlayer()
@@ -52,8 +37,7 @@ void InitPlayer()
 	g_PlayerData.active = false;
 	g_PlayerData.boxCollision.width = 25;
 	g_PlayerData.boxCollision.height = 50;
-	//g_PlayerData.moveX = PLAYER_MOVE_SPEED;
-	//g_PlayerData.moveY = PLAYER_MOVE_SPEED;
+	
 	g_PlayerData.dir = 1;
 
 
@@ -62,25 +46,14 @@ void InitPlayer()
 	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y - 30;
 	g_PlayerData.moveX = 0;
 	g_PlayerData.moveY = 1;
-	//g_PlayerData.playAnim = PLAYER_ANIM_NONE;
-
-	//for (int i = 0; i < PLAYER_ANIM_MAX; i++)
-	//{
-		//InitAnimation(&g_PlayerData.animation[i]);
-	//}
-
-	// 構造体はmemsetで0初期化できる
-	//memset(&g_PlayerData.boxCollision, 0, sizeof(g_PlayerData.boxCollision));
+	
 }
 
 void LoadPlayer()
 {
 
 	g_PlayerData.handle = LoadGraph("Data/Player/Player1.png");
-	/*if(IsInputKey(KEY_LEFT))
-	{
-		g_PlayerData.handle = LoadGraph("Data/Player/Player1B.png");
-	}*/
+	
 
 }
 
@@ -89,14 +62,7 @@ void StartPlayer()
 	// 生存フラグを立てる
 	g_PlayerData.active = true;
 
-	// 矩形判定設定
-	/*g_PlayerData.boxCollision.posX = PLAYER_BOX_COLLISION_OFFSET_X;
-	g_PlayerData.boxCollision.posY = PLAYER_BOX_COLLISION_OFFSET_Y;
-	g_PlayerData.boxCollision.width = PLAYER_BOX_COLLISION_WIDTH;
-	g_PlayerData.boxCollision.height = PLAYER_BOX_COLLISION_HEIGHT;*/
-
-	// 待機アニメーションから開始する
-	//StartPlayerAnimation(PLAYER_ANIM_IDLE);
+	
 }
 
 void StepPlayer()
@@ -126,11 +92,7 @@ void UpdatePlayer()
 	{
 		g_PlayerData.moveY = -5;
 	}
-	// 下入力
-	/*if (IsTriggerKey(KEY_DOWN))
-	{
-		g_PlayerData.moveY = 5;
-	}*/
+	
 	// 左入力
 	if (IsInputKey(KEY_LEFT))
 	{
@@ -144,6 +106,12 @@ void UpdatePlayer()
 		g_PlayerData.moveX = 3;
 		g_PlayerData.dir = -1;
 		
+	}
+	if (IsInputKey(KEY_Z))
+	{
+
+		
+
 	}
 
 	// 死んでいたら処理しない
@@ -165,24 +133,8 @@ void UpdatePlayer()
 	g_PlayerData.posY += g_PlayerData.moveY;
 
 
-	//UpdatePlayerAnimation();
 
-
-
-
-	//if (IsTriggerKey(KEY_Z))
-	//{
-	//	float fireX = g_PlayerData.posX + PLAYER_NORMAL_SHOT_OFFSET_X;
-	//	float fireY = g_PlayerData.posY + PLAYER_NORMAL_SHOT_OFFSET_Y;
-
-	//	RequestFireBullet(BULLET_LIFE, fireX, fireY, BULLET_SPEED, 0.0f, BULLET_RADIUS);
-
-	//	//PlaySE(SE_PLAYER_SHOT);
-
-	//	g_PlayerData.bulletIntervalTimer = PLAYER_NORMAL_SHOT_INTERVAL;
-	//}
-
-	if (g_PlayerData.posX >= 1750)
+	/*if (g_PlayerData.posX >= 1750)
 	{
 		g_PlayerData.posX = 1750;
 
@@ -191,7 +143,7 @@ void UpdatePlayer()
 	{
 		g_PlayerData.posX = -70;
 
-	}
+	}*/
 	if (g_PlayerData.posY <= -60)
 	{
 		g_PlayerData.posY = -60;
@@ -234,16 +186,13 @@ void DrawPlayer()
 	{
 		Reverse = 0;
 	}
-	DrawRectGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+	DrawRectGraph((int)g_PlayerData.posX - camera.pos.x, (int)g_PlayerData.posY - camera.pos.y, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
 	
 }
 
 void FinPlayer()
 {
-	/*for (int i = 0; i < PLAYER_ANIM_MAX; i++)
-	{
-		DeleteGraph(g_PlayerData.animation[i].handle);
-	}*/
+	
 }
 
 PlayerData* GetPlayer()

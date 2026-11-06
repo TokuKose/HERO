@@ -7,8 +7,6 @@
 #define PLAYER_HEIGHT	(50.0f)
 #define PLAYER_RADIUS	(36.0f)
 
-
-
 struct PlayerData
 {
 	int handle;

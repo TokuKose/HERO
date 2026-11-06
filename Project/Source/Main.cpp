@@ -9,6 +9,7 @@
 #include "Player/Player.h"
 
 #include "Enemy/Enemy.h"
+#include "Camera/Camera.h"
 
 //ƒvƒƒOƒ‰ƒ€‚Ì‰‚ß‚ÍWinMain‚©‚çŽn‚Ü‚è‚Ü‚·
 
@@ -34,6 +35,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
 
     InitInput();
 
+    InitCamera();
+
     InitPlayer();
     
     InitEnemy();
@@ -55,6 +58,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
     while (ProcessMessage() >= 0)
 
     {
+        StepCamera();
 
         ClearDrawScreen();
 
@@ -78,9 +82,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
 
         DrawMap();
 
-        DrawPlayer();
+       
 
         DrawEnemy();
+
+        DrawPlayer();
 
         ScreenFlip();
 
