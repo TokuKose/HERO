@@ -61,15 +61,7 @@ void InitEnemy()
 	g_EnemyData.posY = ENEMY_DEFAULT_POS_Y - 30;
 	g_EnemyData.moveX = 0;
 	g_EnemyData.moveY = 1;
-	//g_EnemyData.playAnim = ENEMY_ANIM_NONE;
-
-	//for (int i = 0; i < ENEMY_ANIM_MAX; i++)
-	//{
-		//InitAnimation(&g_EnemyData.animation[i]);
-	//}
-
-	// 構造体はmemsetで0初期化できる
-	//memset(&g_EnemyData.boxCollision, 0, sizeof(g_EnemyData.boxCollision));
+	
 }
 
 void LoadEnemy()
@@ -88,14 +80,6 @@ void StartEnemy()
 	// 生存フラグを立てる
 	g_EnemyData.active = true;
 
-	// 矩形判定設定
-	/*g_EnemyData.boxCollision.posX = ENEMY_BOX_COLLISION_OFFSET_X;
-	g_EnemyData.boxCollision.posY = ENEMY_BOX_COLLISION_OFFSET_Y;
-	g_EnemyData.boxCollision.width = ENEMY_BOX_COLLISION_WIDTH;
-	g_EnemyData.boxCollision.height = ENEMY_BOX_COLLISION_HEIGHT;*/
-
-	// 待機アニメーションから開始する
-	//StartEnemyAnimation(ENEMY_ANIM_IDLE);
 }
 
 void StepEnemy()

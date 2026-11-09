@@ -4,6 +4,7 @@
 #include "../Input/Input.h"
 #include "../Collision/Collision.h"
 #include "../Map/MapManager.h"
+#include "../Enemy/Enemy.h"
 
 #define PLAYER_DEFAULT_POS_X (300.0f)
 #define PLAYER_DEFAULT_POS_Y (200.0f)
@@ -37,7 +38,7 @@ void InitPlayer()
 	g_PlayerData.active = false;
 	g_PlayerData.boxCollision.width = 25;
 	g_PlayerData.boxCollision.height = 50;
-	
+
 	g_PlayerData.dir = 1;
 
 
@@ -46,14 +47,14 @@ void InitPlayer()
 	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y - 30;
 	g_PlayerData.moveX = 0;
 	g_PlayerData.moveY = 1;
-	
+
 }
 
 void LoadPlayer()
 {
 
 	g_PlayerData.handle = LoadGraph("Data/Player/Player1.png");
-	
+
 
 }
 
@@ -62,7 +63,7 @@ void StartPlayer()
 	// 生存フラグを立てる
 	g_PlayerData.active = true;
 
-	
+
 }
 
 void StepPlayer()
@@ -92,27 +93,22 @@ void UpdatePlayer()
 	{
 		g_PlayerData.moveY = -5;
 	}
-	
+
 	// 左入力
 	if (IsInputKey(KEY_LEFT))
 	{
 		g_PlayerData.moveX = -3;
 		g_PlayerData.dir = 1;
-		
+
 	}
 	// 右入力
 	if (IsInputKey(KEY_RIGHT))
 	{
 		g_PlayerData.moveX = 3;
 		g_PlayerData.dir = -1;
-		
-	}
-	if (IsInputKey(KEY_Z))
-	{
-
-		
 
 	}
+	
 
 	// 死んでいたら処理しない
 	if (!g_PlayerData.active) return;
@@ -164,40 +160,86 @@ void UpdatePlayer()
 
 	g_PlayerData.moveX = 0;
 
-	
+
 
 }
 
+int test = 0;
 void DrawPlayer()
 {
+	
 	// 死んでいたら処理しない
 	if (!g_PlayerData.active) return;
 
 	//カメラ取得
 	CameraData camera = GetCamera();
-
+	
 	//DrawGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, g_PlayerData.handle, TRUE);
 	int Reverse = 0;
 	if (g_PlayerData.dir == 1)
 	{
 		Reverse = 1;
 	}
-	 if (g_PlayerData.dir == -1)
+	if (g_PlayerData.dir == -1)
 	{
 		Reverse = 0;
 	}
-	DrawRectGraph((int)g_PlayerData.posX - camera.pos.x, (int)g_PlayerData.posY - camera.pos.y, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+
+	if (g_PlayerData.flash == true)
+	{
+		if (test++ %  10 > 3)
+		{
+			DrawRectGraph((int)g_PlayerData.posX - camera.pos.x, (int)g_PlayerData.posY - camera.pos.y, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+			
+			
+		}
+	}
+	else
+	{
+		DrawRectGraph((int)g_PlayerData.posX - camera.pos.x, (int)g_PlayerData.posY - camera.pos.y, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+	}
 	
 }
 
 void FinPlayer()
 {
-	
+
 }
 
 PlayerData* GetPlayer()
 {
 	return &g_PlayerData;
+}
+
+
+void PlayerHitEnemy()
+{
+	PlayerData tempPlayer = g_PlayerData;
+	EnemyData* Enemy = GetEnemy();
+	const float POS_OFFSET = PLAYER_MAP_COLLISION_OFFSET;
+	const float SIZE_OFFSET = PLAYER_MAP_COLLISION_OFFSET * 2;
+	g_PlayerData.flash = false;
+	// まだ当たっているなら縦に当たっている
+	// 当たり判定のボックス計算
+	float x, y, w, h;
+	CalcBoxCollision(tempPlayer, x, y, w, h);
+
+	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
+		Enemy->posX, Enemy->posY, ENEMY_WIDTH, ENEMY_HEIGHT))
+	{
+		// 上からあたったか
+		if (tempPlayer.moveY > 0.0f)
+		{
+			g_PlayerData.flash = true;
+			
+		}
+		// 下からあたったか
+		else
+		{
+			g_PlayerData.flash = true;
+			
+		}
+	}
 }
 
 void PlayerHitNormalBlockY(MapChipData mapChipData)
@@ -240,10 +282,7 @@ void PlayerHitNormalBlockY(MapChipData mapChipData)
 	}
 }
 
-void PlayerHitEnemy()
-{
 
-}
 
 void PlayerHitNormalBlockX(MapChipData mapChipData)
 {

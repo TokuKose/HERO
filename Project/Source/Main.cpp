@@ -68,6 +68,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
 
         UpdateEnemy();
 
+        PlayerHitEnemy();
+
         DrawBox(0, 0, 1600, 900,
 
             GetColor(255, 255, 255), TRUE);
