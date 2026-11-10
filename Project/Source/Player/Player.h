@@ -13,7 +13,7 @@ struct PlayerData
 	bool active;								// 生存フラグ
 	bool isTurn;								// 左を向いているか
 	bool isAir;									// 空中にいるか
-	int flash;                                 // 点滅
+	int flash;                                  // 点滅
 	float posX;									// X座標
 	float posY;									// Y座標
 	float moveX;								// X移動量

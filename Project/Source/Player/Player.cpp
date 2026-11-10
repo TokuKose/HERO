@@ -5,6 +5,9 @@
 #include "../Collision/Collision.h"
 #include "../Map/MapManager.h"
 #include "../Enemy/Enemy.h"
+#include "../PlayerAttack/PlayerAttack.h"
+
+#define FPS (60)
 
 #define PLAYER_DEFAULT_POS_X (300.0f)
 #define PLAYER_DEFAULT_POS_Y (200.0f)
@@ -185,13 +188,11 @@ void DrawPlayer()
 		Reverse = 0;
 	}
 
-	if (g_PlayerData.flash == true)
+	if (g_PlayerData.flash-- > 0)
 	{
 		if (test++ %  10 > 3)
 		{
 			DrawRectGraph((int)g_PlayerData.posX - camera.pos.x, (int)g_PlayerData.posY - camera.pos.y, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
-			
-			
 		}
 	}
 	else
@@ -218,7 +219,7 @@ void PlayerHitEnemy()
 	EnemyData* Enemy = GetEnemy();
 	const float POS_OFFSET = PLAYER_MAP_COLLISION_OFFSET;
 	const float SIZE_OFFSET = PLAYER_MAP_COLLISION_OFFSET * 2;
-	g_PlayerData.flash = false;
+
 	// まだ当たっているなら縦に当たっている
 	// 当たり判定のボックス計算
 	float x, y, w, h;
@@ -230,13 +231,13 @@ void PlayerHitEnemy()
 		// 上からあたったか
 		if (tempPlayer.moveY > 0.0f)
 		{
-			g_PlayerData.flash = true;
+			g_PlayerData.flash = 3 * FPS;
 			
 		}
 		// 下からあたったか
 		else
 		{
-			g_PlayerData.flash = true;
+			g_PlayerData.flash = 3 * FPS;
 			
 		}
 	}
