@@ -7,7 +7,7 @@
 #include "Input/Input.h"
 
 #include "Player/Player.h"
-
+#include "PlayerAttack/PlayerAttack.h"
 #include "Enemy/Enemy.h"
 #include "Camera/Camera.h"
 
@@ -38,10 +38,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
     InitCamera();
 
     InitPlayer();
+
+    InitPlayerAttack();
     
     InitEnemy();
 
     LoadPlayer();
+
+    LoadPlayerAttack();
 
     LoadEnemy();
 
@@ -66,9 +70,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
 
         UpdatePlayer();
 
+        UpdatePlayerAttack();
+
         UpdateEnemy();
 
         PlayerHitEnemy();
+
+        PlayerAttackHitEnemy();
 
         DrawBox(0, 0, 1600, 900,
 
@@ -90,8 +98,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
 
         DrawPlayer();
 
+        DrawPlayerAttack();
+
         ScreenFlip();
 
     }
-
+    FinEnemy();
 }

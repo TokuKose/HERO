@@ -62,6 +62,7 @@ void InitEnemy()
 	g_EnemyData.moveX = 0;
 	g_EnemyData.moveY = 1;
 	
+	g_EnemyData.Life = 1;
 }
 
 void LoadEnemy()
@@ -100,6 +101,8 @@ void StepEnemy()
 	g_EnemyData.moveY += ENEMY_GRAVITY;
 
 
+
+
 }
 
 void UpdateEnemy()
@@ -114,6 +117,10 @@ void UpdateEnemy()
 		g_EnemyData.isAir = true;
 	}
 
+	if (g_EnemyData.Life <= 0)
+	{
+		g_EnemyData.active = false;
+	}
 
 	g_EnemyData.moveY += ENEMY_GRAVITY;
 
@@ -195,10 +202,7 @@ void DrawEnemy()
 
 void FinEnemy()
 {
-	/*for (int i = 0; i < ENEMY_ANIM_MAX; i++)
-	{
-		DeleteGraph(g_EnemyData.animation[i].handle);
-	}*/
+
 }
 
 EnemyData* GetEnemy()

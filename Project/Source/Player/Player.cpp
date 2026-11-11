@@ -32,7 +32,7 @@ PlayerData g_PrevPlayerData = { 0 };
 
 void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h);
 
-
+PlayerAttackData* PlayerAttack = GetPlayerAttack();
 
 void InitPlayer()
 {
@@ -111,7 +111,23 @@ void UpdatePlayer()
 		g_PlayerData.dir = -1;
 
 	}
-	
+	if (IsTriggerKey(KEY_Z))
+	{
+		
+
+		if (g_PlayerData.dir == 1)
+		{
+			FirePlayerAttack(g_PlayerData.posX - 100, g_PlayerData.posY - 30, true);
+			
+		}
+		else
+		{
+			FirePlayerAttack(g_PlayerData.posX +10, g_PlayerData.posY-30,false);
+		}
+		
+
+		
+	}
 
 	// 死んでいたら処理しない
 	if (!g_PlayerData.active) return;
@@ -192,12 +208,12 @@ void DrawPlayer()
 	{
 		if (test++ %  10 > 3)
 		{
-			DrawRectGraph((int)g_PlayerData.posX - camera.pos.x, (int)g_PlayerData.posY - camera.pos.y, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+			DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
 		}
 	}
 	else
 	{
-		DrawRectGraph((int)g_PlayerData.posX - camera.pos.x, (int)g_PlayerData.posY - camera.pos.y, 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+		DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
 	}
 	
 }
@@ -219,7 +235,10 @@ void PlayerHitEnemy()
 	EnemyData* Enemy = GetEnemy();
 	const float POS_OFFSET = PLAYER_MAP_COLLISION_OFFSET;
 	const float SIZE_OFFSET = PLAYER_MAP_COLLISION_OFFSET * 2;
-
+	if (Enemy->active == false)
+	{
+		return;
+	}
 	// まだ当たっているなら縦に当たっている
 	// 当たり判定のボックス計算
 	float x, y, w, h;
