@@ -34,6 +34,8 @@ void CalcBoxCollision(PlayerData player, float& x, float& y, float& w, float& h)
 
 PlayerAttackData* PlayerAttack = GetPlayerAttack();
 
+
+//
 void InitPlayer()
 {
 	g_PlayerData.posX = PLAYER_DEFAULT_POS_X;
