@@ -115,20 +115,20 @@ void UpdatePlayer()
 	}
 	if (IsTriggerKey(KEY_Z))
 	{
-		
+
 
 		if (g_PlayerData.dir == 1)
 		{
-			FirePlayerAttack(g_PlayerData.posX - 100, g_PlayerData.posY - 30, true);
-			
+			FirePlayerAttack(g_PlayerData.posX -30 , g_PlayerData.posY, true);
+
 		}
 		else
 		{
-			FirePlayerAttack(g_PlayerData.posX +10, g_PlayerData.posY-30,false);
+			FirePlayerAttack(g_PlayerData.posX + 30, g_PlayerData.posY, false);
 		}
-		
 
-		
+
+
 	}
 
 	// 死んでいたら処理しない
@@ -188,13 +188,13 @@ void UpdatePlayer()
 int test = 0;
 void DrawPlayer()
 {
-	
+
 	// 死んでいたら処理しない
 	if (!g_PlayerData.active) return;
 
 	//カメラ取得
 	CameraData camera = GetCamera();
-	
+
 	//DrawGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, g_PlayerData.handle, TRUE);
 	int Reverse = 0;
 	if (g_PlayerData.dir == 1)
@@ -208,7 +208,7 @@ void DrawPlayer()
 
 	if (g_PlayerData.flash-- > 0)
 	{
-		if (test++ %  10 > 3)
+		if (test++ % 10 > 3)
 		{
 			DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
 		}
@@ -217,7 +217,7 @@ void DrawPlayer()
 	{
 		DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
 	}
-	
+
 }
 
 void FinPlayer()
@@ -234,32 +234,36 @@ PlayerData* GetPlayer()
 void PlayerHitEnemy()
 {
 	PlayerData tempPlayer = g_PlayerData;
-	EnemyData* Enemy = GetEnemy();
-	const float POS_OFFSET = PLAYER_MAP_COLLISION_OFFSET;
-	const float SIZE_OFFSET = PLAYER_MAP_COLLISION_OFFSET * 2;
-	if (Enemy->active == false)
-	{
-		return;
-	}
-	// まだ当たっているなら縦に当たっている
-	// 当たり判定のボックス計算
-	float x, y, w, h;
-	CalcBoxCollision(tempPlayer, x, y, w, h);
 
-	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
-		Enemy->posX, Enemy->posY, ENEMY_WIDTH, ENEMY_HEIGHT))
+	for (int i = 0; i < ENEMY_NUM; i++)
 	{
-		// 上からあたったか
-		if (tempPlayer.moveY > 0.0f)
+		EnemyData* Enemy = GetEnemy(i);
+		const float POS_OFFSET = PLAYER_MAP_COLLISION_OFFSET;
+		const float SIZE_OFFSET = PLAYER_MAP_COLLISION_OFFSET * 2;
+		if (Enemy->active == false)
 		{
-			g_PlayerData.flash = 3 * FPS;
-			
+			continue;
 		}
-		// 下からあたったか
-		else
+		// まだ当たっているなら縦に当たっている
+		// 当たり判定のボックス計算
+		float x, y, w, h;
+		CalcBoxCollision(tempPlayer, x, y, w, h);
+
+		if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
+			Enemy->posX, Enemy->posY, ENEMY_WIDTH, ENEMY_HEIGHT))
 		{
-			g_PlayerData.flash = 3 * FPS;
-			
+			// 上からあたったか
+			if (tempPlayer.moveY > 0.0f)
+			{
+				g_PlayerData.flash = 3 * FPS;
+
+			}
+			// 下からあたったか
+			else
+			{
+				g_PlayerData.flash = 3 * FPS;
+
+			}
 		}
 	}
 }

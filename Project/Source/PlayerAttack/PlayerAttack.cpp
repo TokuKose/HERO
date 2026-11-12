@@ -15,8 +15,8 @@ void CalcBoxCollision(PlayerAttackData player, float& x, float& y, float& w, flo
 
 void InitPlayerAttack()
 {
-	g_PlayerAttackData.boxCollision.width = 50;
-	g_PlayerAttackData.boxCollision.height = 50;
+	g_PlayerAttackData.boxCollision.width = 40;
+	g_PlayerAttackData.boxCollision.height = 40;
 }
 
 void LoadPlayerAttack()
@@ -48,7 +48,7 @@ void DrawPlayerAttack()
 	int Reverse = 1;
 	if (g_PlayerAttackData.active == true)
 	{
-		DrawRectGraph((int)(g_PlayerAttackData.posX - camera.pos.x), (int)(g_PlayerAttackData.posY - camera.pos.y), 0, 0, 128, 122, g_PlayerAttackData.handle, TRUE,g_PlayerAttackData.isTurn, 0);
+		DrawRectGraph((int)(g_PlayerAttackData.posX - camera.pos.x), (int)(g_PlayerAttackData.posY - camera.pos.y), 0, 0, 40, 40, g_PlayerAttackData.handle, TRUE, g_PlayerAttackData.isTurn, 0);
 	}
 
 	/*
@@ -68,7 +68,7 @@ void FinPlayerAttack()
 {
 }
 
-void FirePlayerAttack(float posX, float posY,bool turn)
+void FirePlayerAttack(float posX, float posY, bool turn)
 {
 	g_PlayerAttackData.active = true;
 	g_PlayerAttackData.posX = posX;
@@ -85,31 +85,39 @@ PlayerAttackData* GetPlayerAttack()
 void PlayerAttackHitEnemy()
 {
 	PlayerAttackData tempPlayerAttack = g_PlayerAttackData;
-	EnemyData* Enemy = GetEnemy();
-	const float POS_OFFSET = PLAYERATTACK_MAP_COLLISION_OFFSET;
-	const float SIZE_OFFSET = PLAYERATTACK_MAP_COLLISION_OFFSET * 2;
-
-	
-
-	// まだ当たっているなら縦に当たっている
-	// 当たり判定のボックス計算
-	float x, y, w, h;
-	CalcBoxCollision(tempPlayerAttack, x, y, w, h);
-
-	if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
-		Enemy->posX, Enemy->posY, ENEMY_WIDTH, ENEMY_HEIGHT))
+	if (g_PlayerAttackData.active == false)
 	{
-		// 上からあたったか
-		if (tempPlayerAttack.moveY > 0.0f)
-		{
-			Enemy->Life= Enemy->Life-1 ;
+		return;
+	}
+	
+	for (int i = 0; i < ENEMY_NUM; i++)
+	{
+		EnemyData* Enemy = GetEnemy(i);
+		const float POS_OFFSET = PLAYERATTACK_MAP_COLLISION_OFFSET;
+		const float SIZE_OFFSET = PLAYERATTACK_MAP_COLLISION_OFFSET * 2;
 
-		}
-		// 下からあたったか
-		else
-		{
-			Enemy->Life = Enemy->Life - 1;
 
+
+		// まだ当たっているなら縦に当たっている
+		// 当たり判定のボックス計算
+		float x, y, w, h;
+		CalcBoxCollision(tempPlayerAttack, x, y, w, h);
+
+		if (CheckSquareSquare(x + POS_OFFSET, y + POS_OFFSET, w - SIZE_OFFSET, h - SIZE_OFFSET,
+			Enemy->posX, Enemy->posY, ENEMY_WIDTH, ENEMY_HEIGHT))
+		{
+			// 上からあたったか
+			if (tempPlayerAttack.moveY > 0.0f)
+			{
+				Enemy->Life = Enemy->Life - 1;
+
+			}
+			// 下からあたったか
+			else
+			{
+				Enemy->Life = Enemy->Life - 1;
+
+			}
 		}
 	}
 }

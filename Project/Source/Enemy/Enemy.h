@@ -7,6 +7,8 @@
 #define ENEMY_HEIGHT	(50.0f)
 #define ENEMY_RADIUS	(36.0f)
 
+// “G‚Ì”
+#define ENEMY_NUM (10)
 
 
 struct EnemyData
@@ -37,9 +39,11 @@ void DrawEnemy();
 void FinEnemy();
 
 // æ“¾ŠÖ”
-EnemyData* GetEnemy();
+
+EnemyData* GetEnemy(int index);
 
 // “–‚½‚è”»’è
-void EnemyHitNormalBlockX(MapChipData mapChipData);
+void EnemyHitNormalBlockX(EnemyData* enemyData, MapChipData mapChipData);
+void EnemyHitNormalBlockY(EnemyData* enemyData, MapChipData mapChipData);
 
-void EnemyHitNormalBlockY(MapChipData mapChipData);
+void CalcBoxCollision(EnemyData enemy, float& x, float& y, float& w, float& h);
