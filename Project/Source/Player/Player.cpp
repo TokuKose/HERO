@@ -10,7 +10,7 @@
 #define FPS (60)
 
 #define PLAYER_DEFAULT_POS_X (300.0f)
-#define PLAYER_DEFAULT_POS_Y (200.0f)
+#define PLAYER_DEFAULT_POS_Y (450.0f)
 #define PLAYER_MOVE_SPEED (4.0f)
 
 // ジャンプ力
@@ -44,8 +44,8 @@ void InitPlayer()
 	g_PlayerData.boxCollision.width = 25;
 	g_PlayerData.boxCollision.height = 50;
 
-	g_PlayerData.dir = 1;
-
+	g_PlayerData.dir = -1;
+	g_PlayerData.Life = 3;
 
 	// testデータ
 	g_PlayerData.posX = PLAYER_DEFAULT_POS_X - 30;
@@ -60,7 +60,7 @@ void LoadPlayer()
 
 	g_PlayerData.handle = LoadGraph("Data/Player/Player1.png");
 
-
+	
 }
 
 void StartPlayer()
@@ -127,8 +127,6 @@ void UpdatePlayer()
 			FirePlayerAttack(g_PlayerData.posX + 30, g_PlayerData.posY, false);
 		}
 
-
-
 	}
 
 	// 死んでいたら処理しない
@@ -181,7 +179,10 @@ void UpdatePlayer()
 
 	g_PlayerData.moveX = 0;
 
-
+	if (g_PlayerData.Life <= 0)
+	{
+		g_PlayerData.active = false;
+	}
 
 }
 
@@ -197,15 +198,15 @@ void DrawPlayer()
 
 	//DrawGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, g_PlayerData.handle, TRUE);
 	int Reverse = 0;
-	if (g_PlayerData.dir == 1)
-	{
-		Reverse = 1;
-	}
+	
 	if (g_PlayerData.dir == -1)
 	{
 		Reverse = 0;
 	}
-
+	if (g_PlayerData.dir == 1)
+	{
+		Reverse = 1;
+	}
 	if (g_PlayerData.flash-- > 0)
 	{
 		if (test++ % 10 > 3)
@@ -256,14 +257,15 @@ void PlayerHitEnemy()
 			if (tempPlayer.moveY > 0.0f)
 			{
 				g_PlayerData.flash = 3 * FPS;
-
+				g_PlayerData.Life = g_PlayerData.Life - 1;
 			}
 			// 下からあたったか
 			else
 			{
 				g_PlayerData.flash = 3 * FPS;
-
+				g_PlayerData.Life = g_PlayerData.Life - 1;
 			}
+			
 		}
 	}
 }

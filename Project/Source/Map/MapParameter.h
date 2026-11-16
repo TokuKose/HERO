@@ -11,6 +11,7 @@ enum MapChipType
 {
 	MAP_TYPE_NONE,
 	NORMAL_BLOCK,
+
 	BLOCK_TYPE_MAX,
 };
 

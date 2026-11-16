@@ -22,6 +22,7 @@ struct PlayerData
 	float beforposY;
 	int hitFlag;
 	int dir;
+	int Life;
 	Body body;
 	BoxCollision boxCollision;					// ‹éŒ`“–‚½‚è”»’è
 };
