@@ -21,7 +21,9 @@ void InitPlayerAttack()
 
 void LoadPlayerAttack()
 {
-	g_PlayerAttackData.handle = LoadGraph("Data/Player/Slash.png");
+	g_PlayerAttackData.handle[CHANGE_SEIVERATTACK] = LoadGraph("Data/Player/Slash.png");
+
+	g_PlayerAttackData.handle[CHANGE_RANCERATTACK] = LoadGraph("Data/Player/Rance.png");
 }
 
 void StartPlayerAttack()
@@ -46,9 +48,10 @@ void DrawPlayerAttack()
 	CameraData camera = GetCamera();
 	PlayerData* Player = GetPlayer();
 	int Reverse = 1;
+	
 	if (g_PlayerAttackData.active == true)
 	{
-		DrawRectGraph((int)(g_PlayerAttackData.posX - camera.pos.x), (int)(g_PlayerAttackData.posY - camera.pos.y), 0, 0, 40, 40, g_PlayerAttackData.handle, TRUE, g_PlayerAttackData.isTurn, 0);
+		DrawRectGraph((int)(g_PlayerAttackData.posX - camera.pos.x), (int)(g_PlayerAttackData.posY - camera.pos.y), 0, 0, g_PlayerAttackData.width, g_PlayerAttackData.height, g_PlayerAttackData.useHandle, TRUE, g_PlayerAttackData.isTurn, 0);
 	}
 
 	/*
@@ -79,7 +82,7 @@ void FirePlayerAttack(float posX, float posY, bool turn)
 
 PlayerAttackData* GetPlayerAttack()
 {
-	return nullptr;
+	return &g_PlayerAttackData;
 }
 
 void PlayerAttackHitEnemy()
@@ -131,4 +134,26 @@ void CalcBoxCollision(PlayerAttackData player, float& x, float& y, float& w, flo
 	y = player.posY + player.boxCollision.posY;
 	w = player.boxCollision.width;
 	h = player.boxCollision.height;
+}
+
+void SetChangeAttack(ChangeAttack changeAttack)
+{
+	g_PlayerAttackData.change = changeAttack;
+
+	if (changeAttack == CHANGE_SEIVERATTACK)
+	{
+		g_PlayerAttackData.useHandle = g_PlayerAttackData.handle[CHANGE_SEIVERATTACK];
+		g_PlayerAttackData.width = 40;
+		g_PlayerAttackData.height = 40;
+		g_PlayerAttackData.boxCollision.width = 40;
+		g_PlayerAttackData.boxCollision.height = 40;
+	}
+	else if (changeAttack == CHANGE_RANCERATTACK)
+	{
+		g_PlayerAttackData.useHandle = g_PlayerAttackData.handle[CHANGE_RANCERATTACK];
+		g_PlayerAttackData.width = 80;
+		g_PlayerAttackData.height = 40;
+		g_PlayerAttackData.boxCollision.width = 80;
+		g_PlayerAttackData.boxCollision.height = 40;
+	}
 }

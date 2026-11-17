@@ -52,15 +52,14 @@ void InitPlayer()
 	g_PlayerData.posY = PLAYER_DEFAULT_POS_Y - 30;
 	g_PlayerData.moveX = 0;
 	g_PlayerData.moveY = 1;
-
+	g_PlayerData.change = CHANGE_SEIVER;
 }
 
 void LoadPlayer()
 {
-
-	g_PlayerData.handle = LoadGraph("Data/Player/Player1.png");
-
+	g_PlayerData.handle[CHANGE_SEIVER] = LoadGraph("Data/Player/Player1.png");
 	
+	g_PlayerData.handle[CHANGE_RANCER]=LoadGraph("Data/Player/Player2.png");
 }
 
 void StartPlayer()
@@ -113,10 +112,38 @@ void UpdatePlayer()
 		g_PlayerData.dir = -1;
 
 	}
+	if (IsTriggerKey(KEY_W))
+	{
+		if (g_PlayerData.change == CHANGE_SEIVER)
+		{
+			g_PlayerData.change = CHANGE_RANCER;
+			SetChangeAttack(CHANGE_RANCERATTACK);
+		}
+		else if (g_PlayerData.change == CHANGE_RANCER)
+		{
+			g_PlayerData.change = CHANGE_ARCHER;
+			SetChangeAttack(CHANGE_ARCHERATTACK);
+
+		}
+		else if (g_PlayerData.change == CHANGE_ARCHER)
+		{
+			g_PlayerData.change = CHANGE_CASTER;
+			SetChangeAttack(CHANGE_CASTERATTACK);
+
+		}
+		else if (g_PlayerData.change == CHANGE_CASTER)
+		{
+			g_PlayerData.change = CHANGE_SEIVER;
+			SetChangeAttack(CHANGE_SEIVERATTACK);
+
+		}
+		
+			
+		
+		
+	}
 	if (IsTriggerKey(KEY_Z))
 	{
-
-
 		if (g_PlayerData.dir == 1)
 		{
 			FirePlayerAttack(g_PlayerData.posX -30 , g_PlayerData.posY, true);
@@ -127,6 +154,11 @@ void UpdatePlayer()
 			FirePlayerAttack(g_PlayerData.posX + 30, g_PlayerData.posY, false);
 		}
 
+
+		if (g_PlayerData.change == CHANGE_RANCER)
+		{
+
+		}
 	}
 
 	// Ž€‚ñ‚Å‚¢‚½‚çˆ—‚µ‚È‚¢
@@ -198,7 +230,17 @@ void DrawPlayer()
 
 	//DrawGraph((int)g_PlayerData.posX, (int)g_PlayerData.posY, g_PlayerData.handle, TRUE);
 	int Reverse = 0;
-	
+	int handle = 0;
+	if (g_PlayerData.change==CHANGE_SEIVER )
+	{
+		handle = g_PlayerData.handle[CHANGE_SEIVER];
+	}
+	else if (g_PlayerData.change == CHANGE_RANCER)
+	{
+		handle = g_PlayerData.handle[CHANGE_RANCER];
+	}
+
+
 	if (g_PlayerData.dir == -1)
 	{
 		Reverse = 0;
@@ -211,12 +253,12 @@ void DrawPlayer()
 	{
 		if (test++ % 10 > 3)
 		{
-			DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+			DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, handle, TRUE, Reverse, 0);
 		}
 	}
 	else
 	{
-		DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, g_PlayerData.handle, TRUE, Reverse, 0);
+		DrawRectGraph((int)(g_PlayerData.posX - camera.pos.x), (int)(g_PlayerData.posY - camera.pos.y), 0, 0, 35, 50, handle, TRUE, Reverse, 0);
 	}
 
 }
@@ -256,14 +298,25 @@ void PlayerHitEnemy()
 			// ã‚©‚ç‚ ‚½‚Á‚½‚©
 			if (tempPlayer.moveY > 0.0f)
 			{
-				g_PlayerData.flash = 3 * FPS;
-				g_PlayerData.Life = g_PlayerData.Life - 1;
+				if (g_PlayerData.flash <= 0)
+				{
+					g_PlayerData.Life = g_PlayerData.Life - 1;
+					g_PlayerData.flash = 3 * FPS;
+				}
+				
+				
+				
 			}
 			// ‰º‚©‚ç‚ ‚½‚Á‚½‚©
 			else
 			{
-				g_PlayerData.flash = 3 * FPS;
-				g_PlayerData.Life = g_PlayerData.Life - 1;
+				if (g_PlayerData.flash <= 0)
+				{
+					g_PlayerData.Life = g_PlayerData.Life - 1;
+					g_PlayerData.flash = 3 * FPS;
+				}
+				
+				
 			}
 			
 		}

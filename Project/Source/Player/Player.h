@@ -7,9 +7,18 @@
 #define PLAYER_HEIGHT	(50.0f)
 #define PLAYER_RADIUS	(36.0f)
 
+enum Change
+{
+	CHANGE_SEIVER,
+    CHANGE_RANCER,
+	CHANGE_ARCHER,
+	CHANGE_CASTER,
+	CHANGE_MAX
+};
 struct PlayerData
 {
-	int handle;
+	int handle[CHANGE_MAX];
+	
 	bool active;								// ¶‘¶ƒtƒ‰ƒO
 	bool isTurn;								// ¶‚ğŒü‚¢‚Ä‚¢‚é‚©
 	bool isAir;									// ‹ó’†‚É‚¢‚é‚©
@@ -23,6 +32,7 @@ struct PlayerData
 	int hitFlag;
 	int dir;
 	int Life;
+	Change change;
 	Body body;
 	BoxCollision boxCollision;					// ‹éŒ`“–‚½‚è”»’è
 };
