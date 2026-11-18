@@ -24,6 +24,21 @@ void LoadPlayerAttack()
 	g_PlayerAttackData.handle[CHANGE_SEIVERATTACK] = LoadGraph("Data/Player/Slash.png");
 
 	g_PlayerAttackData.handle[CHANGE_RANCERATTACK] = LoadGraph("Data/Player/Rance.png");
+
+	g_PlayerAttackData.handle[CHANGE_ARCHERATTACK] = LoadGraph("Data/Player/Arrow.png");
+
+	if (GetPlayer()->change == CHANGE_SEIVER)
+	{
+		SetChangeAttack(CHANGE_SEIVERATTACK);
+	}
+	else if (GetPlayer()->change == CHANGE_RANCER)
+	{
+		SetChangeAttack(CHANGE_RANCERATTACK);
+	}
+	else if (GetPlayer()->change == CHANGE_ARCHER)
+	{
+		SetChangeAttack(CHANGE_ARCHERATTACK);
+	}
 }
 
 void StartPlayerAttack()
@@ -154,6 +169,14 @@ void SetChangeAttack(ChangeAttack changeAttack)
 		g_PlayerAttackData.width = 80;
 		g_PlayerAttackData.height = 40;
 		g_PlayerAttackData.boxCollision.width = 80;
+		g_PlayerAttackData.boxCollision.height = 40;
+	}
+	else if (changeAttack == CHANGE_ARCHERATTACK)
+	{
+		g_PlayerAttackData.useHandle = g_PlayerAttackData.handle[CHANGE_ARCHERATTACK];
+		g_PlayerAttackData.width = 40;
+		g_PlayerAttackData.height = 40;
+		g_PlayerAttackData.boxCollision.width = 40;
 		g_PlayerAttackData.boxCollision.height = 40;
 	}
 }

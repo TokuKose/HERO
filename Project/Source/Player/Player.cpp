@@ -60,6 +60,8 @@ void LoadPlayer()
 	g_PlayerData.handle[CHANGE_SEIVER] = LoadGraph("Data/Player/Player1.png");
 	
 	g_PlayerData.handle[CHANGE_RANCER]=LoadGraph("Data/Player/Player2.png");
+
+	g_PlayerData.handle[CHANGE_ARCHER] = LoadGraph("Data/Player/Player3.png");
 }
 
 void StartPlayer()
@@ -114,6 +116,7 @@ void UpdatePlayer()
 	}
 	if (IsTriggerKey(KEY_W))
 	{
+		
 		if (g_PlayerData.change == CHANGE_SEIVER)
 		{
 			g_PlayerData.change = CHANGE_RANCER;
@@ -155,10 +158,6 @@ void UpdatePlayer()
 		}
 
 
-		if (g_PlayerData.change == CHANGE_RANCER)
-		{
-
-		}
 	}
 
 	// éÄÇÒÇ≈Ç¢ÇΩÇÁèàóùÇµÇ»Ç¢
@@ -239,7 +238,10 @@ void DrawPlayer()
 	{
 		handle = g_PlayerData.handle[CHANGE_RANCER];
 	}
-
+	else if (g_PlayerData.change == CHANGE_ARCHER)
+	{
+		handle = g_PlayerData.handle[CHANGE_ARCHER];
+	}
 
 	if (g_PlayerData.dir == -1)
 	{

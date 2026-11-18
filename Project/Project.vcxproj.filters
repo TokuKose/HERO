@@ -43,6 +43,9 @@
     <Filter Include="Source\PlayerAttack">
       <UniqueIdentifier>{8bde5231-b32c-4d31-bbd9-e51534ccf750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Player\Bullet">
+      <UniqueIdentifier>{6f5319e1-57a6-4a6f-a072-24932a9a6ec2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -92,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="Source\PlayerAttack\PlayerAttack.cpp">
       <Filter>Source\PlayerAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bullet\BulletManager.cpp">
+      <Filter>Source\Player\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Source\PlayerAttack\PlayerAttack.h">
       <Filter>Source\PlayerAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bullet\BulletManager.h">
+      <Filter>Source\Player\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
