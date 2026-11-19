@@ -99,6 +99,9 @@
     <ClCompile Include="Source\Bullet\BulletManager.cpp">
       <Filter>Source\Player\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Bullet\Bullet.cpp">
+      <Filter>Source\Player\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Player\Player.h">
@@ -153,6 +156,9 @@
       <Filter>Source\PlayerAttack</Filter>
     </ClInclude>
     <ClInclude Include="Source\Bullet\BulletManager.h">
+      <Filter>Source\Player\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bullet\Bullet.h">
       <Filter>Source\Player\Bullet</Filter>
     </ClInclude>
   </ItemGroup>

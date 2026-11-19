@@ -210,6 +210,11 @@ void UpdatePlayer()
 
 	g_PlayerData.moveX = 0;
 
+	if (g_PlayerData.posY >= 500)
+	{
+		g_PlayerData.Life = 0;
+	}
+
 	if (g_PlayerData.Life <= 0)
 	{
 		g_PlayerData.active = false;

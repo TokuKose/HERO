@@ -25,7 +25,7 @@ void LoadPlayerAttack()
 
 	g_PlayerAttackData.handle[CHANGE_RANCERATTACK] = LoadGraph("Data/Player/Rance.png");
 
-	g_PlayerAttackData.handle[CHANGE_ARCHERATTACK] = LoadGraph("Data/Player/Arrow.png");
+	
 
 	if (GetPlayer()->change == CHANGE_SEIVER)
 	{
