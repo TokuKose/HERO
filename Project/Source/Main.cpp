@@ -10,6 +10,7 @@
 #include "PlayerAttack/PlayerAttack.h"
 #include "Enemy/Enemy.h"
 #include "Camera/Camera.h"
+#include "Bullet/Bullet.h"
 
 //ÉvÉçÉOÉâÉÄÇÃèâÇﬂÇÕWinMainÇ©ÇÁénÇ‹ÇËÇ‹Ç∑
 
@@ -40,12 +41,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
     InitPlayer();
 
     InitPlayerAttack();
+
+    InitBullet();
     
     InitEnemy();
 
     LoadPlayer();
 
     LoadPlayerAttack();
+
+    LoadBullet();
 
     LoadEnemy();
 
@@ -72,6 +77,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
 
         UpdatePlayerAttack();
 
+        UpdateBullet();
+
         UpdateEnemy();
 
         PlayerHitEnemy();
@@ -92,7 +99,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstamce, _
 
         DrawMap();
 
-       
+        DrawBullet();
 
         DrawEnemy();
 

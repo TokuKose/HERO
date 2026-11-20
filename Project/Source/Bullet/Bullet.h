@@ -1,6 +1,6 @@
 #pragma once
+#include "../Collision/Collision.h"
 #define BULLET_MAX (128)
-
 enum ChangeBullet
 {
 	CHANGE_ARCHERBULLET
@@ -16,6 +16,10 @@ struct BulletData
 	float moveX;
 	float moveY;
 	float radius;
+	int width;
+	int height;
+	int dir;
+	BoxCollision boxCollision;
 };
 
 // 各ロジックごとの関数
@@ -27,7 +31,7 @@ void DrawBullet();
 void FinBullet();
 
 // 発射関数
-
+void FirePlayerBullet(float posX, float posY, int dir);
 
 // 弾取得
 BulletData* GetBullet();

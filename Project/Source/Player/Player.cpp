@@ -6,6 +6,7 @@
 #include "../Map/MapManager.h"
 #include "../Enemy/Enemy.h"
 #include "../PlayerAttack/PlayerAttack.h"
+#include "../Bullet/Bullet.h"
 
 #define FPS (60)
 
@@ -147,15 +148,23 @@ void UpdatePlayer()
 	}
 	if (IsTriggerKey(KEY_Z))
 	{
-		if (g_PlayerData.dir == 1)
+		/*if (g_PlayerData.dir == 1)
 		{
 			FirePlayerAttack(g_PlayerData.posX -30 , g_PlayerData.posY, true);
-
 		}
 		else
 		{
 			FirePlayerAttack(g_PlayerData.posX + 30, g_PlayerData.posY, false);
+		}*/
+		if (g_PlayerData.change == CHANGE_ARCHER)
+		{
+			FirePlayerBullet(g_PlayerData.posX - 30, g_PlayerData.posY, g_PlayerData.dir);
 		}
+		else if (g_PlayerData.change == CHANGE_CASTER)
+		{
+			FirePlayerBullet(g_PlayerData.posX - 30, g_PlayerData.posY, g_PlayerData.dir);
+		}
+		
 
 
 	}
