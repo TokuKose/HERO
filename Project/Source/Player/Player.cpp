@@ -60,9 +60,11 @@ void LoadPlayer()
 {
 	g_PlayerData.handle[CHANGE_SEIVER] = LoadGraph("Data/Player/Player1.png");
 	
-	g_PlayerData.handle[CHANGE_RANCER]=LoadGraph("Data/Player/Player2.png");
+	g_PlayerData.handle[CHANGE_RANCER]=  LoadGraph("Data/Player/Player2.png");
 
 	g_PlayerData.handle[CHANGE_ARCHER] = LoadGraph("Data/Player/Player3.png");
+
+	g_PlayerData.handle[CHANGE_CASTER] = LoadGraph("Data/Player/Player4.png");
 }
 
 void StartPlayer()
@@ -148,14 +150,14 @@ void UpdatePlayer()
 	}
 	if (IsTriggerKey(KEY_Z))
 	{
-		/*if (g_PlayerData.dir == 1)
+		if (g_PlayerData.dir == 1)
 		{
 			FirePlayerAttack(g_PlayerData.posX -30 , g_PlayerData.posY, true);
 		}
 		else
 		{
 			FirePlayerAttack(g_PlayerData.posX + 30, g_PlayerData.posY, false);
-		}*/
+		}
 		if (g_PlayerData.change == CHANGE_ARCHER)
 		{
 			FirePlayerBullet(g_PlayerData.posX - 30, g_PlayerData.posY, g_PlayerData.dir);
@@ -256,7 +258,10 @@ void DrawPlayer()
 	{
 		handle = g_PlayerData.handle[CHANGE_ARCHER];
 	}
-
+	else if (g_PlayerData.change == CHANGE_CASTER)
+	{
+		handle = g_PlayerData.handle[CHANGE_CASTER];
+	}
 	if (g_PlayerData.dir == -1)
 	{
 		Reverse = 0;

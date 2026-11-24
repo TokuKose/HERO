@@ -3,13 +3,14 @@
 #define BULLET_MAX (128)
 enum ChangeBullet
 {
-	CHANGE_ARCHERBULLET
+	CHANGE_ARCHERBULLET,
+	CHANGE_CASTERBULLET
+
 };
 // íeÇÃÉfÅ[É^
 struct BulletData
 {
 	bool active;
-	int handle[2];
 	int life;
 	float posX;
 	float posY;

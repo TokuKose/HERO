@@ -14,6 +14,10 @@
 
 BulletData g_BulletData[BULLET_MAX] = { 0 };
 
+int arrowHandle;
+int magicHandle;
+
+
 void CalcBulletBoxCollision(BulletData* bullet, float& x, float& y, float& w, float& h);
 
 // Še’eŠÛ‚Ì‰æ‘œƒnƒ“ƒhƒ‹
@@ -25,11 +29,6 @@ void InitBullet()
 	BulletData* bullet = g_BulletData;
 	for (int i = 0; i < BULLET_MAX; i++, bullet++)
 	{
-		for (int j = 0; j < 2; j++)
-		{
-			bullet->handle[j] = 0;
-		}
-		
 		bullet->life = 0;
 		bullet->posX = 0.0f;
 		bullet->posY = 0.0f;
@@ -43,11 +42,8 @@ void InitBullet()
 
 void LoadBullet()
 {
-	int handle = LoadGraph("Data/Player/Arrow.png");
-	for (int i = 0; i < BULLET_MAX; i++)
-	{
-		g_BulletData[i].handle[CHANGE_ARCHERBULLET] = handle;
-	}
+	arrowHandle = LoadGraph("Data/Player/Arrow.png");
+	magicHandle = LoadGraph("Data/Player/Magic.png");
 }
 
 void StepBullet()
@@ -128,7 +124,22 @@ void DrawBullet()
 		{
 			Reverse = 1;
 		}
-		DrawRectGraph((int)(bullet->posX - camera.pos.x), (int)(bullet->posY - camera.pos.y), 0, 0, bullet->width, bullet->height, bullet->handle[CHANGE_ARCHERBULLET], TRUE, Reverse, 0);
+
+		//int arrowHandle;
+		//int magicHandle;
+		int Change;
+		if (Change == 1)
+		{
+			arrowHandle;
+		}
+		else if (Change == 2)
+		{
+			magicHandle;
+		}
+
+
+
+		DrawRectGraph((int)(bullet->posX - camera.pos.x), (int)(bullet->posY - camera.pos.y), 0, 0, bullet->width, bullet->height, Change, TRUE, Reverse, 0);
 		//DrawGraph((int)bullet->posX-camera.pos.x, (int)bullet->posY-camera.pos.y, bullet->handle[CHANGE_ARCHERBULLET], TRUE, );
 	}
 }
