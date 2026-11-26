@@ -32,6 +32,7 @@ struct PlayerData
 	int hitFlag;
 	int dir;
 	int Life;
+	int interval;
 	Change change;
 	Body body;
 	BoxCollision boxCollision;					// ‹éŒ`“–‚½‚è”»’è

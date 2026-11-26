@@ -69,17 +69,7 @@ void DrawPlayerAttack()
 		DrawRectGraph((int)(g_PlayerAttackData.posX - camera.pos.x), (int)(g_PlayerAttackData.posY - camera.pos.y), 0, 0, g_PlayerAttackData.width, g_PlayerAttackData.height, g_PlayerAttackData.useHandle, TRUE, g_PlayerAttackData.isTurn, 0);
 	}
 
-	/*
-	if (Player->dir = 1)
-	{
-		g_PlayerAttackData.posX = Player->posX = Player->posX + 5;
-	}
-	else
-	{
-		g_PlayerAttackData.posX = Player->posX = Player->posX - 5;
-	}
-	g_PlayerAttackData.posY = Player->posY ;
-	*/
+	
 }
 
 void FinPlayerAttack()

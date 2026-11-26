@@ -148,25 +148,38 @@ void UpdatePlayer()
 		
 		
 	}
+
 	if (IsTriggerKey(KEY_Z))
 	{
-		if (g_PlayerData.dir == 1)
+		if (g_PlayerData.interval <= 0)
 		{
-			FirePlayerAttack(g_PlayerData.posX -30 , g_PlayerData.posY, true);
+
+
+			if (g_PlayerData.change == CHANGE_SEIVER || g_PlayerData.change == CHANGE_RANCER)
+			{
+				if (g_PlayerData.dir == 1)
+				{
+					FirePlayerAttack(g_PlayerData.posX - 30, g_PlayerData.posY, true);
+					g_PlayerData.interval = 30;
+				}
+				else
+				{
+					FirePlayerAttack(g_PlayerData.posX + 30, g_PlayerData.posY, false);
+					g_PlayerData.interval = 30;
+				}
+			}
+			else if (g_PlayerData.change == CHANGE_ARCHER)
+			{
+				FirePlayerBullet(g_PlayerData.posX - 30, g_PlayerData.posY, g_PlayerData.dir, CHANGE_ARCHERBULLET);
+				g_PlayerData.interval = 30;
+			}
+			else if (g_PlayerData.change == CHANGE_CASTER)
+			{
+				FirePlayerBullet(g_PlayerData.posX - 30, g_PlayerData.posY, g_PlayerData.dir, CHANGE_CASTERBULLET);
+				g_PlayerData.interval = 60;
+			}
+
 		}
-		else
-		{
-			FirePlayerAttack(g_PlayerData.posX + 30, g_PlayerData.posY, false);
-		}
-		if (g_PlayerData.change == CHANGE_ARCHER)
-		{
-			FirePlayerBullet(g_PlayerData.posX - 30, g_PlayerData.posY, g_PlayerData.dir);
-		}
-		else if (g_PlayerData.change == CHANGE_CASTER)
-		{
-			FirePlayerBullet(g_PlayerData.posX - 30, g_PlayerData.posY, g_PlayerData.dir);
-		}
-		
 
 
 	}
@@ -230,7 +243,7 @@ void UpdatePlayer()
 	{
 		g_PlayerData.active = false;
 	}
-
+	g_PlayerData.interval--;
 }
 
 int test = 0;

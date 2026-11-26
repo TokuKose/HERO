@@ -20,6 +20,9 @@ struct BulletData
 	int width;
 	int height;
 	int dir;
+	int bullettype;
+	int timer;
+
 	BoxCollision boxCollision;
 };
 
@@ -32,7 +35,7 @@ void DrawBullet();
 void FinBullet();
 
 // î≠éÀä÷êî
-void FirePlayerBullet(float posX, float posY, int dir);
+void FirePlayerBullet(float posX, float posY, int dir,int bullettype);
 
 // íeéÊìæ
 BulletData* GetBullet();

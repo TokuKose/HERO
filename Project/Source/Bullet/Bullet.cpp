@@ -61,7 +61,7 @@ void MoveBullet()
 		// ê∂Ç´ÇƒÇ¢ÇÈíeÇæÇØï`âÊÇ∑ÇÈ
 		if (!bullet->active) continue;
 
-		bullet->posX -= bullet->dir * 10;
+		bullet->posX += bullet->moveX;
 	}
 }
 
@@ -71,17 +71,23 @@ void UpdateBullet()
 
 	// èàóùçÇë¨âªÇÃÇΩÇﬂÉ|ÉCÉìÉ^ÇégÇ§
 	BulletData* bullet = g_BulletData;
+	
 	for (int i = 0; i < BULLET_MAX; i++, bullet++)
 	{
 		// ê∂Ç´ÇƒÇ¢ÇÈíeÇæÇØï`âÊÇ∑ÇÈ
 		if (!bullet->active) continue;
-
+		bullet->timer = bullet->timer - 1;
+		if (bullet->timer <= 0)
+		{
+			bullet->active = false;
+		}
 		for (int j = 0; j < ENEMY_NUM; j++)
 		{
 			EnemyData* Enemy = GetEnemy(j);
 			const float POS_OFFSET = BULLETATTACK_MAP_COLLISION_OFFSET;
 			const float SIZE_OFFSET = BULLETATTACK_MAP_COLLISION_OFFSET * 2;
-
+			
+			
 			if (Enemy->active==false)
 			{
 				continue; 
@@ -127,14 +133,14 @@ void DrawBullet()
 
 		//int arrowHandle;
 		//int magicHandle;
-		int Change;
-		if (Change == 1)
+		int Change = 0;
+		if (bullet->bullettype == CHANGE_ARCHERBULLET)
 		{
-			arrowHandle;
+			Change = arrowHandle;
 		}
-		else if (Change == 2)
+		else if (bullet->bullettype == CHANGE_CASTERBULLET)
 		{
-			magicHandle;
+			Change=magicHandle;
 		}
 
 
@@ -149,22 +155,51 @@ void FinBullet()
 	DeleteGraph(g_BulletHandle);
 }
 
-void FirePlayerBullet(float posX, float posY, int dir)
+void FirePlayerBullet(float posX, float posY, int dir,int bullettype)
 {
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		if (g_BulletData[i].active == false)
 		{
-			g_BulletData[i].dir = dir;
-			g_BulletData[i].active = true;
-			g_BulletData[i].posX = posX;
-			g_BulletData[i].posY = posY;
-			g_BulletData[i].boxCollision.posX = 12;
-			g_BulletData[i].boxCollision.posY = 6;
-			g_BulletData[i].boxCollision.width = 48;
-			g_BulletData[i].boxCollision.height = 8;
+			if (bullettype == CHANGE_ARCHERBULLET)
+			{
+				g_BulletData[i].dir = dir;
+				g_BulletData[i].active = true;
+				g_BulletData[i].posX = posX;
+				g_BulletData[i].posY = posY;
+				g_BulletData[i].moveX = 10 * -dir;
+				g_BulletData[i].width = 60;
+				g_BulletData[i].height = 20;
+				g_BulletData[i].boxCollision.posX = 12;
+				g_BulletData[i].boxCollision.posY = 6;
+				g_BulletData[i].boxCollision.width = 48;
+				g_BulletData[i].boxCollision.height = 8;
+				g_BulletData[i].bullettype = bullettype;
+				g_BulletData[i].timer = 60*5;
+			}
+			else if (bullettype == CHANGE_CASTERBULLET)
+			{
+				g_BulletData[i].dir = dir;
+				g_BulletData[i].active = true;
+				g_BulletData[i].posX = posX;
+				g_BulletData[i].posY = posY-50;
+
+				g_BulletData[i].moveX = 2 * -dir;
+				g_BulletData[i].width = 153;
+				g_BulletData[i].height = 115;
+				g_BulletData[i].boxCollision.posX = 12;
+				g_BulletData[i].boxCollision.posY = 6;
+				g_BulletData[i].boxCollision.width = 153;
+				g_BulletData[i].boxCollision.height = 103;
+				g_BulletData[i].bullettype = bullettype;
+				g_BulletData[i].timer = 120;
+			}
+			
+
 			break;
+
 		}
+
 	}
 	
 	
